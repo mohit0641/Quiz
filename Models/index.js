@@ -1,3 +1,5 @@
 module.exports = {
-    cattle: require('./cattle'),
+  user: require('./user'),
+  quiz: require('./quiz'),
+  attempts: require('./attempts'),
 };

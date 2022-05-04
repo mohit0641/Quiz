@@ -5,10 +5,10 @@ let Plugins = require('./Plugins');
 let mongoose = require('mongoose');
 let Routes = require('./Routes');
 let logger = require('./Config/logger');
-let Queue = require('bull');
-let uploadImage = require('./Utils/uploadImage');
-let Service = require('./Services');
-let Models = require('./Models');
+//let Queue = require('bull');
+//let uploadImage = require('./Utils/uploadImage');
+//let Service = require('./Services');
+//let Models = require('./Models');
 
 (async () => {
     try {
@@ -21,7 +21,7 @@ let Models = require('./Models');
             routes: {cors: true}
         });
 
-        await mongoose.connect("mongodb://localhost:27017/cattle", {useFindAndModify:false,useNewUrlParser: true,useUnifiedTopology:true,useCreateIndex:true});
+        await mongoose.connect("mongodb://localhost:27017/quiz", {useNewUrlParser: true,useUnifiedTopology:true});
         logger.info('MongoDB Connected');
 
         server.route(
@@ -52,27 +52,6 @@ let Models = require('./Models');
         await server.start();
 
         logger.log('info','Server running at %s', server.info.uri);
-
-        let imageQueue = new Queue('image transcoding', {
-            redis: {
-                host: '127.0.0.1',
-                port: 6379,
-            }
-        });
-
-        imageQueue.process(async job => {
-            console.log("out",job.data);
-            let d = new Date();
-            let randomData = d.getTime();
-            const img = await uploadImage.uploadFilesOnS3(job.data.image,randomData)
-            console.log("finish",img,job.data.cattleId);
-            const updateCattle = await Service.DataServices.updateMultipleData(Models.cattle,
-                {_id:job.data.cattleId},
-                {originalURL:img.original,resizedURL:img.thumbnail,isActive:true},
-                {new:true})
-        });
-
-        module.exports={imageQueue:imageQueue,server:server}
 
     }
     catch (err) {

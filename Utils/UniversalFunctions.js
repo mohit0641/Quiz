@@ -1,5 +1,6 @@
 let Config = require('../Config');
 let Boom = require('boom');
+const Joi = require('joi');
 
 let failActionFunction =  (request, reply, source, error) => {
     let customErrorMessage = '';
@@ -73,8 +74,14 @@ let sendSuccess = async  (successMsg, data)=> {
     }
 };
 
+let authorizationHeaderObj = Joi.object({
+  authorization: Joi.string().required()
+}).unknown();
+
+
 module.exports = {
     sendError:sendError,
     sendSuccess:sendSuccess,
     failActionFunction: failActionFunction,
+    authorizationHeaderObj:authorizationHeaderObj
 };

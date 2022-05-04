@@ -1,8 +1,10 @@
 "use strict";
-let CatlleRoute = require("./CatlleRoute");
+let userRoute = require("./userRoute");
+let quizRoute = require("./quizRoute");
 
 let all = [].concat(
-    CatlleRoute,
+    userRoute,
+    quizRoute
 );
 
 module.exports = all;

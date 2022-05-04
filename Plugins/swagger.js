@@ -15,7 +15,7 @@ module.exports.swaggerPlugin = {
         try {
             const swaggerOptions = {
                 info: {
-                    'title': "Cattle API's",
+                    'title': "Quiz API's",
                     // description: 'API documentation for food ordering website',
                     'version': Pack.version,
                 },

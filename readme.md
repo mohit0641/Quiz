@@ -6,3 +6,7 @@
   - Quizzes must contain at least 1 question and should support varying numbers of questions.
   - Questions must have a non-empty question and a non-empty answer
   - Each submitted quiz should have it's questions marked correct or incorrect based on the predefined answers.****
+
+
+
+To Run - npm start
